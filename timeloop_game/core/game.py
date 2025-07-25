@@ -43,10 +43,10 @@ class Game:
                 self.bg_layers.append(img)
             else:
                 self.bg_layers.append(None)
-        # Platform tile
+        # Platform tile (use block_plank.svg for a more appealing look)
         self.tile_img = None
-        tile_svg = 'timeloop_game/assets/Tiles/terrain_stone_horizontal_middle.svg'
-        tile_png = 'timeloop_game/assets/Tiles/terrain_stone_horizontal_middle.png'
+        tile_svg = 'timeloop_game/assets/Tiles/block_plank.svg'
+        tile_png = 'timeloop_game/assets/Tiles/block_plank.png'
         if os.path.exists(tile_png):
             self.tile_img = pygame.image.load(tile_png).convert_alpha()
         elif os.path.exists(tile_svg) and cairosvg:
@@ -164,15 +164,15 @@ class Game:
                     ghost.draw(self.screen)
                 self.player.draw(self.screen)
                 self.timer.draw(self.screen)
-                font = pygame.font.SysFont('comicsansms', 48, bold=True)
+                font = pygame.font.SysFont('comicsansms', 32, bold=True)
                 loop_text = font.render(f"Loops: {self.loop_count}/{self.max_loops}", True, (255, 255, 255))
                 self.screen.blit(loop_text, (10, 10))
                 timer_text = font.render(f"Time: {int(self.timer.time_left)}", True, (255, 255, 255))
-                self.screen.blit(timer_text, (10, 70))
+                self.screen.blit(timer_text, (10, 50))
                 level_text = font.render(f"Level: {self.current_level}/10", True, (255, 255, 0))
                 self.screen.blit(level_text, (600, 10))
                 if self.won:
-                    font = pygame.font.SysFont('comicsansms', 72, bold=True)
+                    font = pygame.font.SysFont('comicsansms', 48, bold=True)
                     text = font.render("You Escaped!", True, (255, 255, 0))
                     self.screen.blit(text, (220, 250))
                     if pygame.time.get_ticks() - self.win_time > 2000:
@@ -182,7 +182,7 @@ class Game:
                         self.reset_game()
                         break
                 if self.lost:
-                    font = pygame.font.SysFont('comicsansms', 72, bold=True)
+                    font = pygame.font.SysFont('comicsansms', 48, bold=True)
                     text = font.render("Loop Limit! You Lose!", True, (255, 80, 80))
                     self.screen.blit(text, (100, 250))
                     if pygame.time.get_ticks() - self.lose_time > 2000:
