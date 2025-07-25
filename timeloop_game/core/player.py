@@ -6,21 +6,22 @@ except ImportError:
     cairosvg = None
 
 class Player:
-    def __init__(self, x, y):
+    def __init__(self, x, y, color='green'):
         self.rect = pygame.Rect(x, y, 40, 60)
         self.vel_y = 0
         self.on_ground = False
         self.state = 'idle'  # idle, walk, jump
         self.walk_frame = 0
         self.walk_timer = 0
+        self.color = color
         self.sprites = {'idle': None, 'walk': [None, None], 'jump': None}
         # Load idle
-        self.sprites['idle'] = self.load_sprite('character_green_idle')
+        self.sprites['idle'] = self.load_sprite(f'character_{self.color}_idle')
         # Load walk frames
-        self.sprites['walk'][0] = self.load_sprite('character_green_walk_a')
-        self.sprites['walk'][1] = self.load_sprite('character_green_walk_b')
+        self.sprites['walk'][0] = self.load_sprite(f'character_{self.color}_walk_a')
+        self.sprites['walk'][1] = self.load_sprite(f'character_{self.color}_walk_b')
         # Load jump
-        self.sprites['jump'] = self.load_sprite('character_green_jump')
+        self.sprites['jump'] = self.load_sprite(f'character_{self.color}_jump')
 
     def load_sprite(self, name):
         svg_path = f'timeloop_game/assets/Characters/{name}.svg'
@@ -74,10 +75,6 @@ class Player:
             self.walk_timer = 0
 
     def draw(self, surface):
-        # Draw shadow
-        shadow_rect = self.rect.copy()
-        shadow_rect.y += 8
-        pygame.draw.ellipse(surface, (40, 40, 60, 100), shadow_rect)
         sprite = None
         if self.state == 'walk':
             sprite = self.sprites['walk'][self.walk_frame]

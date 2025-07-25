@@ -6,20 +6,21 @@ except ImportError:
     cairosvg = None
 
 class Ghost:
-    def __init__(self, recorded_moves, start_pos):
+    def __init__(self, recorded_moves, start_pos, color='green'):
         self.moves = recorded_moves
         self.index = 0
         self.rect = pygame.Rect(*start_pos, 40, 60)
         self.state = 'idle'
         self.walk_frame = 0
         self.walk_timer = 0
+        self.color = color
         self.sprites = {'idle': None, 'walk': [None, None], 'jump': None}
         self.positions = []  # for motion trail
         # Load sprites
-        self.sprites['idle'] = self.load_sprite('character_green_idle')
-        self.sprites['walk'][0] = self.load_sprite('character_green_walk_a')
-        self.sprites['walk'][1] = self.load_sprite('character_green_walk_b')
-        self.sprites['jump'] = self.load_sprite('character_green_jump')
+        self.sprites['idle'] = self.load_sprite(f'character_{self.color}_idle')
+        self.sprites['walk'][0] = self.load_sprite(f'character_{self.color}_walk_a')
+        self.sprites['walk'][1] = self.load_sprite(f'character_{self.color}_walk_b')
+        self.sprites['jump'] = self.load_sprite(f'character_{self.color}_jump')
 
     def load_sprite(self, name):
         svg_path = f'timeloop_game/assets/Characters/{name}.svg'
